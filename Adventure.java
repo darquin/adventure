@@ -1,9 +1,18 @@
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 
 public class Adventure extends JFrame {
 
-    public Adventure() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public Adventure() {
         
         this.add(new Board());
         
@@ -16,7 +25,7 @@ public class Adventure extends JFrame {
     }
 
     public static void main(String[] args) {
-        new RType();
+        new Adventure();
     }
     
     public void readMap()
@@ -24,4 +33,6 @@ public class Adventure extends JFrame {
         image = Toolkit.getDefaultToolkit().getImage("images/map_grass_c.gif");
         g2d.drawImage(image, 50,50, this);
     }
+    Image image;
+    Graphics2D g2d;
 }
