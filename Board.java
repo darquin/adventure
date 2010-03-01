@@ -14,7 +14,11 @@ import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
 
-    private Timer timer;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Timer timer;
     private Craft craft;
 
     public Board() 
@@ -31,7 +35,6 @@ public class Board extends JPanel implements ActionListener {
         timer.start();
     }
 
-
     public void paint(Graphics g)
     {
         super.paint(g);
@@ -44,20 +47,22 @@ public class Board extends JPanel implements ActionListener {
     }
 
 
-    public void actionPerformed(ActionEvent e) {
-        craft.move();
+    public void actionPerformed(ActionEvent e) 
+    {
         repaint();  
     }
 
 
     private class TAdapter extends KeyAdapter {
 
-        public void keyReleased(KeyEvent e) {
-     //       craft.keyReleased(e);
+ /*       public void keyReleased(KeyEvent e) 
+        {
+        	craft.keyReleased(e);
         }
-
-        public void keyPressed(KeyEvent e) {
-            craft.keyPressed(e);
+*/
+        public void keyPressed(KeyEvent e) 
+        {
+            craft.move(craft.keyPressed(e));
         }
     }
 
