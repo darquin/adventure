@@ -1,5 +1,6 @@
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
@@ -23,12 +24,14 @@ public class Board extends JPanel implements ActionListener {
 
     public Board() 
     {
-
-        addKeyListener(new TAdapter());
-        setFocusable(true);
-        setBackground(Color.BLACK);
-        setDoubleBuffered(true);
-
+        this.addKeyListener(new TAdapter());
+        this.setFocusable(true);
+        this.setBackground(Color.BLACK);
+        this.setDoubleBuffered(true);
+        
+        Dimension dimension = new Dimension(500, 300); 
+        this.setPreferredSize(dimension);
+        
         craft = new Craft();
 
         timer = new Timer(5, this);
