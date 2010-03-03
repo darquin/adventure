@@ -12,6 +12,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.List;
+
+import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
+
 
 public class Board extends JPanel implements KeyListener {
 
@@ -27,6 +35,8 @@ public class Board extends JPanel implements KeyListener {
 
     private Map map;
     
+    private List mapspec;
+    
     public Board() 
     {
         this.addKeyListener(this);
@@ -35,6 +45,13 @@ public class Board extends JPanel implements KeyListener {
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         
+        try {
+            CSVReader reader = new CSVReader(new FileReader("adventure.map"));
+            mapspec = reader.readAll();
+        } catch (IOException e) {
+            System.out.println("File ei löydy");
+        }
+            
         this.map = new Map();
         this.craft = new Craft();
         
@@ -60,11 +77,27 @@ public class Board extends JPanel implements KeyListener {
         int rows = HEIGHT / CELL;
         int x, y;
         
+        String mapcell;
+        String mapimage;
+        
         for (int row = 0; row < rows; row++) {
-            y = row * 20;
+            y = row * CELL;
+            String[] rowspec = (String[])mapspec.get(row);
             for (int col = 0; col < cols; col++) {
-                x = col * 20;
-                ImageIcon ii = new ImageIcon(this.getClass().getResource("images/map_grass_c.gif"));
+                x = col * CELL;
+                
+                mapcell = rowspec[col];
+                if (mapcell.equals("0")) {
+                    mapimage = "images/map_grass.gif";
+                } else if (mapcell.equals("1")) {
+                    mapimage = "images/map_forest.gif";
+                } else if (mapcell.equals("2")) {
+                    mapimage = "images/map_mountain.gif";
+                } else {
+                    mapimage = "images/map_grass.gif";
+                }
+                
+                ImageIcon ii = new ImageIcon(this.getClass().getResource(mapimage));
                 Image image = ii.getImage();
                 g.drawImage(image, x, y, this);
                 

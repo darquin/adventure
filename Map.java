@@ -9,7 +9,6 @@ class Map {
     public Map()
     {
         this.map = new ArrayList();
-        System.out.println("arraylist");
         assert this.map instanceof ArrayList;
     }
     
