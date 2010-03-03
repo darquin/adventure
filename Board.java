@@ -26,9 +26,9 @@ public class Board extends JPanel implements KeyListener {
     /**
 	 * 
 	 */
-	private int WIDTH = 500;
-    private int HEIGHT = 300;
-	private int CELL = 20;
+ 	private int CELL = 24;
+	private int WIDTH = CELL * 25;
+    private int HEIGHT = CELL * 14;
 	
 	private static final long serialVersionUID = 1L;
     private Craft craft;
@@ -55,6 +55,8 @@ public class Board extends JPanel implements KeyListener {
         this.map = new Map();
         this.craft = new Craft();
         
+        this.craft.setMap(map);
+        
         Dimension dimension = new Dimension(WIDTH, HEIGHT); 
         this.setPreferredSize(dimension);
     }
@@ -65,7 +67,7 @@ public class Board extends JPanel implements KeyListener {
         
         this.paintMap(g);
         
-        g.drawImage(craft.getImage(), craft.getX(), craft.getY(), this);
+        g.drawImage(craft.getImage(), craft.getCol() * CELL, craft.getRow() * CELL, this);
         
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
@@ -79,6 +81,7 @@ public class Board extends JPanel implements KeyListener {
         
         String mapcell;
         String mapimage;
+        Cell cell;
         
         for (int row = 0; row < rows; row++) {
             y = row * CELL;
@@ -86,13 +89,18 @@ public class Board extends JPanel implements KeyListener {
             for (int col = 0; col < cols; col++) {
                 x = col * CELL;
                 
+                cell = new Cell();
+                cell.setPenetrate(true);
+                
                 mapcell = rowspec[col];
                 if (mapcell.equals("0")) {
                     mapimage = "images/map_grass.gif";
                 } else if (mapcell.equals("1")) {
                     mapimage = "images/map_forest.gif";
+                    cell.setPenetrate(false);
                 } else if (mapcell.equals("2")) {
                     mapimage = "images/map_mountain.gif";
+                    cell.setPenetrate(false);
                 } else {
                     mapimage = "images/map_grass.gif";
                 }
@@ -101,8 +109,6 @@ public class Board extends JPanel implements KeyListener {
                 Image image = ii.getImage();
                 g.drawImage(image, x, y, this);
                 
-                Cell cell = new Cell();
-                cell.setPenetrate(true);
                 this.map.addCell(cell, row, col);
             }
         }

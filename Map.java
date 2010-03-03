@@ -17,6 +17,12 @@ class Map {
         return true;
     }
     
+    public Cell getCell(int row, int col)
+    {
+        ArrayList list = (ArrayList) this.map.get(row);
+        return (Cell) list.get(col);
+    }
+    
     public void addCell(Cell cell, int rowindex, int colindex)
     {
         ArrayList row;

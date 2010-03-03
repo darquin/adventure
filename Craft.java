@@ -12,11 +12,13 @@ import javax.swing.ImageIcon;
 public class Craft {
 
     private String craft = "images/wizard.png";
-
+    
+    private Map map;
+    
     // private int dx;
     // private int dy;
-    private int x;
-    private int y;
+    private int row;
+    private int col;
     private Image image;
     private char moveDirection;
 
@@ -24,18 +26,23 @@ public class Craft {
     {
         ImageIcon ii = new ImageIcon(this.getClass().getResource(craft));
         image = ii.getImage();
-        x = 40;
-        y = 60;
+        this.row = 0;
+        this.col = 0;
     }
     
-    public int getX() 
+    public void setMap(Map map)
     {
-        return x;
+        this.map = map;
+    }
+    
+    public int getRow() 
+    {
+        return this.row;
     }
 
-    public int getY() 
+    public int getCol() 
     {
-        return y;
+        return this.col;
     }
     
  	public Image getImage() 
@@ -46,24 +53,38 @@ public class Craft {
     public void move(KeyEvent e)
     {
         int key = e.getKeyCode();
+        int newrow = this.row;
+        int newcol = this.col;
         
     	switch (key)  {
     	case KeyEvent.VK_LEFT:
     	    craft = "images/wizard.png";
-    	    x -= 20;
+    	    newcol = this.getCol() - 1;
     	    break;
     	case KeyEvent.VK_RIGHT:
     	    craft = "images/wizardRight.png";
-    	    x += 20;
+    	    newcol = this.getCol() + 1;
     	    break;
     	case KeyEvent.VK_UP:
-    	    y -= 20;
+	        newrow = this.getRow() - 1;
     	    break;
     	case KeyEvent.VK_DOWN:
-    	    y += 20;
+	        newrow = this.getRow() + 1;
     	    break;
     	default:
     	    break;
     	}
+    	
+    	if (this.canMoveTo(newcol, newrow)) {
+    	    this.col = newcol;
+    	    this.row = newrow;
+    	}
+	}
+	
+	private boolean canMoveTo(int col, int row)
+	{
+	    System.out.println("Moving to " + row + " " + col);
+	    Cell cell = this.map.getCell(row, col);
+	    return cell.canPenetrate();
 	}
 }
