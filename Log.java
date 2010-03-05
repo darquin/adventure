@@ -9,7 +9,7 @@ public class Log extends JPanel {
         this.setFocusable(true);
         this.setBackground(Color.green);
         
-        Dimension dimension = new Dimension(25 * 24 + 200, 300); 
+        Dimension dimension = new Dimension(Map.WIDTH + 200, 100); 
         this.setPreferredSize(dimension);
     }
 }

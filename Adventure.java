@@ -20,14 +20,12 @@ public class Adventure extends JFrame {
         pane.add(new Log(), BorderLayout.PAGE_END);
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(25 * 24 + 200, 14 * 24 + 300);
+        this.setSize(Map.WIDTH + 200, Map.HEIGHT + 100);
         this.setTitle("Adventure");
         this.setResizable(false);
         this.setVisible(true);
         this.setBackground(Color.GRAY);
         this.setLocationRelativeTo(null);
-        
-        
     }
 
     public static void main(String[] args) {

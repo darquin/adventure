@@ -45,14 +45,13 @@ public class Craft {
         return this.col;
     }
     
- 	public Image getImage() 
- 	{
+    public Image getImage() 
+    {
         return image;
     }
     
-    public void move(KeyEvent e)
+    public void move(int key)
     {
-        int key = e.getKeyCode();
         int newrow = this.row;
         int newcol = this.col;
         
@@ -78,13 +77,23 @@ public class Craft {
     	if (this.canMoveTo(newcol, newrow)) {
     	    this.col = newcol;
     	    this.row = newrow;
+    	    
+    	    ImageIcon ii = new ImageIcon(this.getClass().getResource(craft));
+            this.image = ii.getImage();
     	}
+    }
+	
+    private boolean canMoveTo(int col, int row)
+    {
+    	if (col < 0 || row < 0) {
+    	    return false;
+    	}
+    	
+    	return true;
 	}
 	
-	private boolean canMoveTo(int col, int row)
-	{
-	    System.out.println("Moving to " + row + " " + col);
-	    Cell cell = this.map.getCell(row, col);
-	    return cell.canPenetrate();
-	}
+	System.out.println("Moving to " + row + " " + col);
+	Cell cell = this.map.getCell(row, col);
+	return cell.canPenetrate();
+    }
 }
