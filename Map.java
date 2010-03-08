@@ -18,6 +18,9 @@ import javax.swing.JPanel;
 
 class Map {
     
+    public static final int TOTALCOLS = 80;
+    public static final int TOTALROWS = 60;
+    
     public static final int CELL = 24;
     
     public static final int COLS = 20;
@@ -53,10 +56,10 @@ class Map {
     public void init()
     {
         // käydään läpi jokainen ruutu ja lisätään se tietorakenteeseen
-        for (int row = 0; row < ROWS; row++) {
+        for (int row = 0; row < TOTALROWS; row++) {
             String[] rowspec = (String[]) this.spec.get(row);
             
-            for (int col = 0; col < COLS; col++) {
+            for (int col = 0; col < TOTALCOLS; col++) {
                 int bg = Integer.parseInt(rowspec[col]);
                 
                 // uusi ruutu
@@ -70,11 +73,6 @@ class Map {
     {
         Cell cell = new Cell(row, col);
         
-        //Bg type = Bg.values()[bg];
-        //
-        //switch(type) {
-        //case 
-        //}
         String path;
         
         if (Bg.GRASS.ordinal() == bg) {
@@ -103,12 +101,18 @@ class Map {
         int row = (int) start.getY();
         
         for (int r = 0; r < ROWS; r++) {
-            String[] rowspec = (String[]) this.spec.get(row);
+            boolean rowinmap = (row >= 0 && row < TOTALROWS);
+            
+            if (rowinmap) {
+                String[] rowspec = (String[]) this.spec.get(row);
+            }
             
             int col = (int) start.getX();
             
             for (int c = 0; c < COLS; c++) {
-                this.getCell(row, col).paint(g, p);
+                if (rowinmap && (col >= 0 && col < TOTALCOLS)) {
+                    this.getCell(row, col).paint(r, c, g, p);
+                }
                 
                 // seuraava kolumni
                 col++;

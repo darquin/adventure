@@ -4,10 +4,12 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
+import java.awt.Point;
 import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
+
+import javax.swing.JPanel;
 
 public class Craft {
 
@@ -50,6 +52,14 @@ public class Craft {
         return image;
     }
     
+    public void paint(Point area, Graphics g, JPanel p)
+    {
+        int x = (int) (this.getCol() - area.getX()) * Map.CELL;
+        int y = (int) (this.getRow() - area.getY()) * Map.CELL;
+        
+        g.drawImage(this.getImage(), x, y, p);
+    }
+    
     public void move(int key)
     {
         int newrow = this.row;
@@ -85,15 +95,11 @@ public class Craft {
 	
     private boolean canMoveTo(int col, int row)
     {
-    	if (col < 0 || row < 0) {
-    	    return false;
-    	}
-    	
-    	return true;
-	}
-	
-	System.out.println("Moving to " + row + " " + col);
-	Cell cell = this.map.getCell(row, col);
-	return cell.canPenetrate();
+        if (! ((col >= 0 && col < Map.TOTALCOLS) && (row >= 0 && row < Map.TOTALROWS))) {
+            return false;
+        }
+        
+        Cell cell = this.map.getCell(row, col);
+        return cell.canPenetrate();
     }
 }

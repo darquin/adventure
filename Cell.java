@@ -22,9 +22,9 @@ class Cell {
         this.setPenetrate(true);
     }
     
-    public void paint(Graphics g, JPanel p)
+    public void paint(int row, int col, Graphics g, JPanel p)
     {
-        g.drawImage(this.bgimage, this.col * 24, this.row * 24, p);
+        g.drawImage(this.bgimage, col * 24, row * 24, p);
     }
     
     public void setBgImage(Image i)

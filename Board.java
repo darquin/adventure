@@ -31,8 +31,7 @@ public class Board extends JPanel implements KeyListener {
         this.setFocusable(true);
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
-        
-        this.area = new Point(0, 0);
+        this.area = new Point(-5, -5);
         
         this.map = new Map();
         this.craft = new Craft();
@@ -46,9 +45,28 @@ public class Board extends JPanel implements KeyListener {
     {
         super.paint(g);
         
+        int x = this.craft.getCol();
+        int y = this.craft.getRow();
+        int buffer = 3;
+        
+        int vx = (int) this.area.getX();
+        int vy = (int) this.area.getY();
+        
+        // pitää olla koko mapin sisällä jotta edes testataan kartan siirtymistä
+        boolean insidemap  = (x > (buffer - 1) && x < (Map.TOTALCOLS - buffer)) && (y > (buffer - 1) && y < (Map.TOTALROWS - buffer));
+            
+        boolean insideview = (x > (vx + buffer - 1) && x < (vx + Map.COLS - buffer)) && (y > (vy + buffer - 1) && y < (vy + Map.ROWS - buffer));
+        
+        if (! insideview && insidemap) {
+            int new_view_x = x - 10;
+            int new_view_y = y - 7;
+            
+            this.area.setLocation(new_view_x, new_view_y);
+        }
+        
         this.map.paint(g, this.area, this);
         
-        g.drawImage(craft.getImage(), craft.getCol() * Map.CELL, craft.getRow() * Map.CELL, this);
+        craft.paint(this.area, g, this);
     }
     
     public void keyTyped(KeyEvent e)
