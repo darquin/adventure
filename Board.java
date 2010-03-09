@@ -31,7 +31,7 @@ public class Board extends JPanel implements KeyListener {
         this.setFocusable(true);
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
-        this.area = new Point(-5, -5);
+        this.area = new Point(0, 0);
         
         this.map = new Map();
         this.craft = new Craft();
@@ -53,7 +53,7 @@ public class Board extends JPanel implements KeyListener {
         int vy = (int) this.area.getY();
         
         // pitää olla koko mapin sisällä jotta edes testataan kartan siirtymistä
-        boolean insidemap  = (x > (buffer - 1) && x < (Map.TOTALCOLS - buffer)) && (y > (buffer - 1) && y < (Map.TOTALROWS - buffer));
+        boolean insidemap = (x > (buffer - 1) && x < (Map.TOTALCOLS - buffer)) && (y > (buffer - 1) && y < (Map.TOTALROWS - buffer));
             
         boolean insideview = (x > (vx + buffer - 1) && x < (vx + Map.COLS - buffer)) && (y > (vy + buffer - 1) && y < (vy + Map.ROWS - buffer));
         
