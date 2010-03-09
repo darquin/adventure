@@ -18,11 +18,13 @@ public class Board extends JPanel implements KeyListener {
      */
     
     private static final long serialVersionUID = 1L;
-    private Craft craft;
+    private Creature hero;
+    private Creature golem;
     
     private Map map;
     
     private Point area;
+    private AI ai;
     
     public Board() 
     {
@@ -34,9 +36,14 @@ public class Board extends JPanel implements KeyListener {
         this.area = new Point(0, 0);
         
         this.map = new Map();
-        this.craft = new Craft();
+        this.hero = new Creature(0, 0, "creature");
+        this.ai = new AI();
         
-        this.craft.setMap(map);
+        this.golem = new Creature(3, 3, "golem");
+        this.golem.setMap(this.map);
+        this.golem.setTarget(this.hero);
+        
+        this.hero.setMap(map);
         Dimension dimension = new Dimension(Map.WIDTH, Map.HEIGHT); 
         this.setPreferredSize(dimension);
     }
@@ -45,8 +52,8 @@ public class Board extends JPanel implements KeyListener {
     {
         super.paint(g);
         
-        int x = this.craft.getCol();
-        int y = this.craft.getRow();
+        int x = this.hero.getX();
+        int y = this.hero.getY();
         int buffer = 3;
         
         int vx = (int) this.area.getX();
@@ -66,7 +73,8 @@ public class Board extends JPanel implements KeyListener {
         
         this.map.paint(g, this.area, this);
         
-        craft.paint(this.area, g, this);
+        this.hero.paint(this.area, g, this);
+        this.golem.paint(this.area, g, this);
     }
     
     public void keyTyped(KeyEvent e)
@@ -83,7 +91,10 @@ public class Board extends JPanel implements KeyListener {
     {
         int key = e.getKeyCode();
         
-        this.craft.move(key);
+        this.hero.move(key);
+        
+        this.ai.act(this.golem);
+        
         repaint();
     }
 }
