@@ -13,9 +13,11 @@ import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 
 public class Creature {
+	
+	private static Creature hero;
 
     private String originalImage;
-    protected String creatureImage;
+    private String creatureImage;
     
     private Map map;
     
@@ -24,6 +26,8 @@ public class Creature {
     private Image image;
     private String Alignment;
     private Creature Target;
+    private String Name;
+    private int SightRadius;
 
     public Creature(int x, int y, String img) 
     {
@@ -31,12 +35,14 @@ public class Creature {
     	creatureImage = "images/"+img+".png";
     	originalImage=img;
     	
-    	System.out.println(this.creatureImage);
+    	//System.out.println(this.creatureImage);
         ImageIcon ii = new ImageIcon(this.creatureImage);
         image = ii.getImage();
         this.y = y;
         this.x = x;
         Alignment = "neutral";
+        Name = "Enemy";
+        SightRadius=5;
         
     }
     
@@ -72,7 +78,7 @@ public class Creature {
     	    break;
     	case KeyEvent.VK_RIGHT:
     		creatureImage = "images/"+originalImage+"Right.png";
-    		System.out.println(creatureImage);
+    		//System.out.println(creatureImage);
     	    new_x = this.getX() + 1;
     	    break;
     	case KeyEvent.VK_UP:
@@ -121,12 +127,36 @@ public class Creature {
     }
     
     public Creature getTarget() {
-    	return Target;
+    	return this.Target;
     }
     
     public void setTarget(Creature newtarget) {
-    	Target=newtarget;
+    	this.Target=newtarget;
     }
+    
+    public int getSightRadius() {
+    	return this.SightRadius;
+    }
+    
+    public void setSightRadius(int radius) {
+    	this.SightRadius = radius;
+    }
+
+	public String getName() {
+		return this.Name;
+	}
 	
+	public void setName(String name) {
+		this.Name = name;
+	}
+	
+	public void setHero(Creature hero) {
+		this.hero=hero;
+	}
+	
+	public void setHeroAsTarget() {
+		this.Target = hero;
+	}
+    
 
 }

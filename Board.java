@@ -42,6 +42,8 @@ public class Board extends JPanel implements KeyListener {
         
         this.map = new Map();
         this.hero = new Creature(4, 4, "creature");
+        this.hero.setName("You");
+        this.hero.setHero(this.hero);
         this.ai = new AI();
         
         // this.golem = new Creature(3, 3, "golem");
@@ -52,6 +54,8 @@ public class Board extends JPanel implements KeyListener {
         
         for (int i = 0; i < 5; i++) {
             Creature golem = new Creature(8, 2+i, "golem");
+            golem.setName("Golem");
+            golem.setAlignment("hostile");
             golem.setMap(this.map);
             golem.setTarget(this.hero);
             this.creatures.add(golem);
