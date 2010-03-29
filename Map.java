@@ -29,7 +29,7 @@ class Map {
     public static final int WIDTH = CELL * COLS;
     public static final int HEIGHT = CELL * ROWS;
     
-    private ArrayList map;
+    private ArrayList<ArrayList> map;
     
     private List spec;
     
@@ -39,7 +39,7 @@ class Map {
     
     public Map()
     {
-        this.map = new ArrayList();
+        this.map = new ArrayList<ArrayList>();
         assert this.map instanceof ArrayList;
         
         try {
@@ -132,14 +132,19 @@ class Map {
         return (Cell) list.get(col);
     }
     
+    public Cell getCell(Point point)
+    {
+        return this.getCell((int) point.getY(), (int) point.getX());
+    }
+
     public void addCell(Cell cell, int rowindex, int colindex)
     {
-        ArrayList row;
+        ArrayList<Cell> row;
         
         try {
             row = (ArrayList) this.map.get(rowindex);
         } catch (IndexOutOfBoundsException e) {
-            row = new ArrayList();
+            row = new ArrayList<Cell>();
             this.map.add(rowindex, row);
         }
         

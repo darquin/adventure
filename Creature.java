@@ -1,5 +1,4 @@
 
-
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -12,40 +11,36 @@ import javax.swing.JPanel;
 
 import javax.swing.ImageIcon;
 
-public class Creature {
-	
-	private static Creature hero;
-
+abstract class Creature {
+    
     private String originalImage;
-    private String creatureImage;
-    
-    private Map map;
-    
-    private int y;
-    private int x;
-    private Image image;
-    private String Alignment;
-    private Creature Target;
-    private String Name;
-    private int SightRadius;
 
-    public Creature(int x, int y, String img) 
+    private String image_path;
+    
+    protected Map map;
+    
+    protected Point pos;
+
+    protected Image image;
+
+    protected String Name;
+
+
+    public Creature(Point point, String img) 
     {
-    	
-    	creatureImage = "images/"+img+".png";
-    	originalImage=img;
-    	
-    	//System.out.println(this.creatureImage);
-        ImageIcon ii = new ImageIcon(this.creatureImage);
-        image = ii.getImage();
-        this.y = y;
-        this.x = x;
-        Alignment = "neutral";
-        Name = "Enemy";
-        SightRadius=5;
+        this.image_path = "images/" + img + ".png";
+        this.originalImage = img;
         
+        ImageIcon ii = new ImageIcon(this.image_path);
+        this.image = ii.getImage();
+        this.pos = point;
     }
     
+    public Creature(int x, int y, String img) 
+    {
+        this(new Point(x, y), img);
+    }
+
     public void setMap(Map map)
     {
         this.map = map;
@@ -53,64 +48,79 @@ public class Creature {
     
     public int getY() 
     {
-        return this.y;
+        return (int) this.pos.getY();
     }
 
     public int getX() 
     {
-        return this.x;
+        return (int) this.pos.getX();
     }
     
     public Image getImage() 
     {
-        return image;
+        return this.image;
+    }
+
+
+    abstract public void fight();
+
+    public Point getDestinationPoint(int key)
+    {
+        Point dest = new Point();
+
+        switch (key) {
+        case KeyEvent.VK_LEFT:
+            this.image_path = "images/"+originalImage+".png";
+            dest.setLocation(this.getX() - 1, this.getY());
+            break;
+        case KeyEvent.VK_RIGHT:
+            this.image_path = "images/"+originalImage+"Right.png";
+            dest.setLocation(this.getX() + 1, this.getY());
+            break;
+        case KeyEvent.VK_UP:
+            dest.setLocation(this.getX(), this.getY() - 1);
+            break;
+        case KeyEvent.VK_DOWN:
+            dest.setLocation(this.getX(), this.getY() + 1);
+            break;
+        default:
+            break;
+        }
+
+        return dest;
     }
     
-    public void move(int key)
+    public boolean move(Point point)
     {
-        int new_y = this.y;
-        int new_x = this.x;
-        
-    	switch (key)  {
-    	case KeyEvent.VK_LEFT:
-    	    creatureImage = "images/"+originalImage+".png";
-    	    new_x = this.getX() - 1;
-    	    break;
-    	case KeyEvent.VK_RIGHT:
-    		creatureImage = "images/"+originalImage+"Right.png";
-    		//System.out.println(creatureImage);
-    	    new_x = this.getX() + 1;
-    	    break;
-    	case KeyEvent.VK_UP:
-	        new_y = this.getY() - 1;
-    	    break;
-    	case KeyEvent.VK_DOWN:
-	        new_y = this.getY() + 1;
-    	    break;
-    	default:
-    	    break;
-    	}
-    	
-    	if (this.canMoveTo(new_x, new_y)) {
-    	    this.x = new_x;
-    	    this.y = new_y;
-    	    
-    	    ImageIcon ii = new ImageIcon(creatureImage);
+        if (this.canMoveTo(point)) {
+            this.pos = new Point(point);
+            ImageIcon ii = new ImageIcon(this.image_path);
             this.image = ii.getImage();
-    	}
+
+            return true;
+        } else {
+            return false;
+        }
     }
-	
-    public boolean canMoveTo(int x, int y)
+    
+    public boolean canMoveTo(Point dest)
     {
-    	if (x < 0 || y < 0) {
-    	    return false;
-    	}
+        int x = (int) dest.getX();
+        int y = (int) dest.getY();
+
+        if (x < 0 || y < 0) {
+            return false;
+        }
         
         Cell cell = this.map.getCell(y, x);
         return cell.canPenetrate();
-	}
-	
-	public void paint(Point area, Graphics g, JPanel p)
+    }
+    
+    public boolean canMoveTo(int x, int y) {
+        return this.canMoveTo(new Point(x, y));
+    }
+
+    public void paint(Point area, Graphics g, JPanel p)
     {
         int x = (int) (this.getX() - area.getX()) * Map.CELL;
         int y = (int) (this.getY() - area.getY()) * Map.CELL;
@@ -118,45 +128,12 @@ public class Creature {
         g.drawImage(this.getImage(), x, y, p);
     }
     
-    public String getAlignment() {
-    	return Alignment;
-    }
-    
-    public void setAlignment(String align) {
-    	Alignment = align;
-    }
-    
-    public Creature getTarget() {
-    	return this.Target;
-    }
-    
-    public void setTarget(Creature newtarget) {
-    	this.Target=newtarget;
-    }
-    
-    public int getSightRadius() {
-    	return this.SightRadius;
-    }
-    
-    public void setSightRadius(int radius) {
-    	this.SightRadius = radius;
-    }
 
-	public String getName() {
-		return this.Name;
-	}
-	
-	public void setName(String name) {
-		this.Name = name;
-	}
-	
-	public void setHero(Creature hero) {
-		this.hero=hero;
-	}
-	
-	public void setHeroAsTarget() {
-		this.Target = hero;
-	}
+    public String getName() {
+        return this.Name;
+    }
     
-
+    public void setName(String name) {
+        this.Name = name;
+    }
 }

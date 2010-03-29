@@ -10,6 +10,8 @@ class Cell {
     private int row;
     private int col;
     private boolean penetrate;
+
+    private Creature creature;
     
     private ArrayList items;
     
@@ -22,6 +24,14 @@ class Cell {
         this.setPenetrate(true);
     }
     
+    public Creature getCreature() {
+        return this.creature;
+    }
+
+    public void setCreature(Creature creature) {
+        this.creature = creature;
+    }
+
     public void paint(int row, int col, Graphics g, JPanel p)
     {
         g.drawImage(this.bgimage, col * 24, row * 24, p);
