@@ -22,14 +22,13 @@ public class Board extends JPanel implements KeyListener {
      */
     
     private static final long serialVersionUID = 1L;
-    private Creature hero;
-    //private Creature golem;
-    private ArrayList<Creature> creatures;
+    private Hero hero;
+
+    private ArrayList<Villain> creatures;
     
     private Map map;
     
     private Point area;
-    private AI ai;
     
     public Board() 
     {
@@ -41,50 +40,43 @@ public class Board extends JPanel implements KeyListener {
         this.area = new Point(0, 0);
         
         this.map = new Map();
-        this.hero = new Creature(4, 4, "creature");
+        this.hero = new Hero(new Point(4, 4), "creature");
         this.hero.setName("You");
-        this.hero.setHero(this.hero);
-        this.ai = new AI();
         
-        // this.golem = new Creature(3, 3, "golem");
-        // this.golem.setMap(this.map);
-        // this.golem.setTarget(this.hero);
+        this.creatures = new ArrayList<Villain>();
         
-        this.creatures = new ArrayList();
-        
+        Villain villain;
+
         for (int i = 0; i < 5; i++) {
-            Creature golem = new Creature(8, 2+i, "golem");
-            golem.setName("Golem");
-            golem.setAlignment("hostile");
-            golem.setMap(this.map);
-            golem.setTarget(this.hero);
-            this.creatures.add(golem);
+            villain = new Villain(8, 2+i, "golem");
+            villain.setName("Golem");
+            villain.setAlignment("hostile");
+            villain.setMap(this.map);
+            villain.setTarget(this.hero);
+            this.creatures.add(villain);
         }
         
-        Creature temp_cr;
+        Villain temp_cr;
         
-        temp_cr = new Creature (7,3, "person");
+        temp_cr = new Villain(7,3, "person");
         this.creatures.add(temp_cr); //Array 5 Dunken pig farmer
         
-        temp_cr = new Creature (15,6, "person2");
+        temp_cr = new Villain(15,6, "person2");
         this.creatures.add(temp_cr); //Array 6 Pale skinned man
         
-        temp_cr = new Creature (15,10, "golem2");
+        temp_cr = new Villain(15,10, "golem2");
         this.creatures.add(temp_cr); //Array 7 Advanced Iron Golem
         
-        temp_cr = new Creature (13,2, "person");
+        temp_cr = new Villain(13,2, "person");
         this.creatures.add(temp_cr); //Array 8 Dirty pig farmer
         
-        temp_cr = new Creature (10,3, "golem");
+        temp_cr = new Villain(10,3, "golem");
         this.creatures.add(temp_cr); //Array 9 Raging clay golem
-        
-        
         
         this.creatures.get(5).setMap(this.map);
         this.creatures.get(5).setName("Drunken pig farmer");
         this.creatures.get(5).setAlignment("aggressive");
         this.creatures.get(5).setTarget(hero);
-        
         
         this.creatures.get(6).setMap(this.map);
         this.creatures.get(6).setName("Pale Skinned Man");
@@ -142,37 +134,28 @@ public class Board extends JPanel implements KeyListener {
         
         this.hero.paint(this.area, g, this);
         
-        ListIterator<Creature> iter = this.creatures.listIterator();
+        ListIterator<Villain> iter = this.creatures.listIterator();
         while (iter.hasNext()) {
             iter.next().paint(this.area, g, this);
         }
         //this.golem.paint(this.area, g, this);
     }
     
-    public void keyTyped(KeyEvent e)
-    {
-        
-    }
+    public void keyTyped(KeyEvent e) {}
     
-    public void keyReleased(KeyEvent e)
-    {
-        
-    }
+    public void keyReleased(KeyEvent e) {}
     
     public void keyPressed(KeyEvent e) 
     {
         int key = e.getKeyCode();
         
-        this.hero.move(key);
+        this.hero.act(key);
         
-        //this.ai.act(this.golem);
-        
-        ListIterator<Creature> iter = this.creatures.listIterator();
+        ListIterator<Villain> iter = this.creatures.listIterator();
         while (iter.hasNext()) {
-            this.ai.act(iter.next());
+            iter.next().act();
         }
         
-        System.out.println("* turn end *");
         repaint();
     }
 }
