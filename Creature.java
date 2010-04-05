@@ -20,6 +20,12 @@ abstract class Creature {
     
     protected Map map;
     
+    /**
+     * Logger instance
+     * 
+     */
+    protected Log log;
+
     protected Point pos;
 
     protected Image image;
@@ -186,7 +192,7 @@ abstract class Creature {
     }
     public void assignDamage(int damage){
     	this.health -= damage;
-    	System.out.println(this.Name +", health: "+this.health);
+    	Log.write(this.Name +", health: "+this.health);
     }
     //End stat handling
     
@@ -195,7 +201,7 @@ abstract class Creature {
     public int CriticalHitCheck(int creatureSkill){
     	criticalChance = chanceToHit.nextInt(100);
     	if(criticalChance <= creatureSkill){
-    		System.out.println("A CRITICAL HIT!");
+    		Log.write("A CRITICAL HIT!");
     		return 2;
     	}
     	return 1;
@@ -203,12 +209,12 @@ abstract class Creature {
     protected void Strike(Creature target){
     	dealtDamage = this.attack * CriticalHitCheck(this.skill) - target.defense;
     	if(dealtDamage < 0) dealtDamage = 0;
-    	System.out.println(this.Name+" strikes "+target.Name+" and deals "+dealtDamage+"points of damage!");
+    	Log.write(this.Name+" strikes "+target.Name+" and deals "+dealtDamage+"points of damage!");
     	target.assignDamage(dealtDamage);
     }
     public void Dies(){
     	if(this.health <= 0){
-    		System.out.println(this.Name+" is DEAD!");
+    		Log.write(this.Name+" is DEAD!");
     		this.dead = true;
     	}
     }

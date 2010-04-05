@@ -45,25 +45,26 @@ class Villain extends Creature {
         }
 
         if (this.isInFightRange(this.getTarget()) && this.getAlignment() != "peaceful") {
-            System.out.println(this.getName()+" is ATTACKING " + this.getTarget().getName()+".");
+            Log.write(this.getName()+" is ATTACKING " + this.getTarget().getName()+".");
+
             this.Strike(this.getTarget());
             this.getTarget().Dies();
             ////If target is neutral it becomes aggressive
             //if (this.getTarget().getAlignment()=="neutral") {
             //    this.getTarget().setAlignment("aggressive");
             //    //this.getTarget().setTarget(this.;
-            //    System.out.println(this.getTarget().getName()+" is now aggressive!");
+            //    Log.write(this.getTarget().getName()+" is now aggressive!");
             //}
             ////The same applies to attacker
             //if (this.getAlignment()=="neutral") {
             //    this.setAlignment("aggressive");
-            //    System.out.println(this.getName() + " is now aggressive!");
+            //    Log.write(this.getName() + " is now aggressive!");
             //}
             //
             ////Target will change to attacker
             //if (this.getTarget().getTarget() != this) {
             //    this.getTarget().setTarget(this);
-            //    System.out.println(this.getTarget().getName() + " is now ANGRY with " + this.getName()+ ".");
+            //    Log.write(this.getTarget().getName() + " is now ANGRY with " + this.getName()+ ".");
             //}
             return;
         }
@@ -86,7 +87,7 @@ class Villain extends Creature {
             return null;
         }
         
-        System.out.println(this.getName() + " ("+this.getAlignment()+") sees " + this.getTarget().getName() + ".");
+        Log.write(this.getName() + " ("+this.getAlignment()+") sees " + this.getTarget().getName() + ".");
 
         if (target.getX() < this.getX() && this.canMoveTo(this.getX()-1, this.getY())) {
             move_x = -1;
