@@ -13,10 +13,15 @@ class Villain extends Creature {
 
     protected Creature target;
 
-    public Villain(int x, int y, String img) {
+    public Villain(int x, int y, String img, int strength, int endurance, int agility) {
         super(x, y, img);
         this.alignment = "neutral";
         this.Name = "Enemy";
+        this.str = strength;
+        this.agi = agility;
+        this.end = endurance;
+        
+        this.dead = false;
     }
 
     public void act()
@@ -41,7 +46,8 @@ class Villain extends Creature {
 
         if (this.isInFightRange(this.getTarget()) && this.getAlignment() != "peaceful") {
             System.out.println(this.getName()+" is ATTACKING " + this.getTarget().getName()+".");
-
+            this.Strike(this.getTarget());
+            this.getTarget().Dies();
             ////If target is neutral it becomes aggressive
             //if (this.getTarget().getAlignment()=="neutral") {
             //    this.getTarget().setAlignment("aggressive");
@@ -59,7 +65,6 @@ class Villain extends Creature {
             //    this.getTarget().setTarget(this);
             //    System.out.println(this.getTarget().getName() + " is now ANGRY with " + this.getName()+ ".");
             //}
-            
             return;
         }
     }

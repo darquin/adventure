@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -24,8 +25,30 @@ abstract class Creature {
     protected Image image;
 
     protected String Name;
-
-
+    
+    //Statit creatureille
+    protected int str;
+    protected int end;
+    protected int agi;
+    
+    //Attack = 10 + Str;
+    //Defense = agi / 2;
+    //Health = End * 2
+    //Skill kertoo mahdollisuuden critical hitiin. Pitää keksiä joku logiikka, millä
+    //statit vaikuttaa sen kehitykseen.
+    //Vois myös miettiä jotain maxHealth tyyppistä juttua...
+    protected int attack;
+    protected int defense;
+    protected int health;
+    protected int skill;
+    
+    //Muuttujia tappelua varten
+    private int dealtDamage;
+    private int criticalChance;
+    private Random chanceToHit = new Random();
+    
+    protected boolean dead;
+    
     public Creature(Point point, String img) 
     {
         this.image_path = "images/" + img + ".png";
@@ -135,5 +158,58 @@ abstract class Creature {
     
     public void setName(String name) {
         this.Name = name;
+    }
+    //Stat handling creatureille
+    public void setAttack(){
+    	this.attack = 10 + this.str;
+    }
+    public int getAttack(){
+    	return this.attack;
+    }
+    public void setDefense(){
+    	this.defense = this.agi / 2;
+    }
+    public int getDefense(){
+    	return this.defense;
+    }
+    public void setHealth(){
+    	this.health = this.end * 2;
+    }
+    public int getHealth(){
+    	return this.health;
+    }
+    public void setSkill(){
+    	this.skill = 50;
+    }
+    public int getSkill(){
+    	return this.skill;
+    }
+    public void assignDamage(int damage){
+    	this.health -= damage;
+    	System.out.println(this.Name +", health: "+this.health);
+    }
+    //End stat handling
+    
+    //Metodit tappelua varten:
+    //Tarkistetaan mahdollinen critical hit.
+    public int CriticalHitCheck(int creatureSkill){
+    	criticalChance = chanceToHit.nextInt(100);
+    	if(criticalChance <= creatureSkill){
+    		System.out.println("A CRITICAL HIT!");
+    		return 2;
+    	}
+    	return 1;
+    }
+    protected void Strike(Creature target){
+    	dealtDamage = this.attack * CriticalHitCheck(this.skill) - target.defense;
+    	if(dealtDamage < 0) dealtDamage = 0;
+    	System.out.println(this.Name+" strikes "+target.Name+" and deals "+dealtDamage+"points of damage!");
+    	target.assignDamage(dealtDamage);
+    }
+    public void Dies(){
+    	if(this.health <= 0){
+    		System.out.println(this.Name+" is DEAD!");
+    		this.dead = true;
+    	}
     }
 }

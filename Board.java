@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.ListIterator;
 
@@ -26,6 +28,9 @@ public class Board extends JPanel implements KeyListener {
 
     private ArrayList<Villain> creatures;
     
+    private Hashtable<Integer, Villain> villains;
+    private Enumeration<Villain> enu;
+    
     private Map map;
     
     private Point area;
@@ -40,64 +45,95 @@ public class Board extends JPanel implements KeyListener {
         this.area = new Point(0, 0);
         
         this.map = new Map();
-        this.hero = new Hero(new Point(4, 4), "creature");
+        this.hero = new Hero(new Point(4, 4), "creature", 20, 20, 20);
         this.hero.setName("You");
         
-        this.creatures = new ArrayList<Villain>();
-        
+        //this.creatures = new ArrayList<Villain>();
+        this.villains = new Hashtable<Integer, Villain>();
         Villain villain;
 
         for (int i = 0; i < 5; i++) {
-            villain = new Villain(8, 2+i, "golem");
+            villain = new Villain(8, 2+i, "golem", 10, 10, 10);
             villain.setName("Golem");
             villain.setAlignment("hostile");
             villain.setMap(this.map);
             villain.setTarget(this.hero);
-            this.creatures.add(villain);
+            villain.setAttack();
+            villain.setDefense();
+            villain.setHealth();
+           // this.creatures.add(villain);
+            villains.put(villain.hashCode(), villain);
         }
         
         Villain temp_cr;
         
-        temp_cr = new Villain(7,3, "person");
-        this.creatures.add(temp_cr); //Array 5 Dunken pig farmer
-        
-        temp_cr = new Villain(15,6, "person2");
-        this.creatures.add(temp_cr); //Array 6 Pale skinned man
-        
-        temp_cr = new Villain(15,10, "golem2");
-        this.creatures.add(temp_cr); //Array 7 Advanced Iron Golem
-        
-        temp_cr = new Villain(13,2, "person");
-        this.creatures.add(temp_cr); //Array 8 Dirty pig farmer
-        
-        temp_cr = new Villain(10,3, "golem");
-        this.creatures.add(temp_cr); //Array 9 Raging clay golem
-        
-        this.creatures.get(5).setMap(this.map);
-        this.creatures.get(5).setName("Drunken pig farmer");
-        this.creatures.get(5).setAlignment("aggressive");
-        this.creatures.get(5).setTarget(hero);
-        
-        this.creatures.get(6).setMap(this.map);
-        this.creatures.get(6).setName("Pale Skinned Man");
-        this.creatures.get(6).setAlignment("hostile");
-        this.creatures.get(6).setTarget(this.creatures.get(7));
-        
-        this.creatures.get(7).setMap(this.map);
-        this.creatures.get(7).setName("Advanced Iron Golem");
-        this.creatures.get(7).setAlignment("neutral");
-        this.creatures.get(7).setTarget(hero);
+        temp_cr = new Villain(7,3, "person", 10, 10, 10);
+        temp_cr.setAttack();
+        temp_cr.setDefense();
+        temp_cr.setHealth();
+        int personCode = temp_cr.hashCode();
+        //this.creatures.add(temp_cr); //Array 5 Drunken pig farmer
+        this.villains.put(temp_cr.hashCode(), temp_cr);
         
         
-        this.creatures.get(8).setMap(this.map);
-        this.creatures.get(8).setName("Dirty Pig Farmer");
-        this.creatures.get(8).setAlignment("neutral");
-        this.creatures.get(8).setTarget(this.creatures.get(9));
+        temp_cr = new Villain(15,6, "person2", 10, 10, 10);
+        temp_cr.setAttack();
+        temp_cr.setDefense();
+        temp_cr.setHealth();
+        int person2Code = temp_cr.hashCode();
+        //this.creatures.add(temp_cr); //Array 6 Pale skinned man
+        this.villains.put(temp_cr.hashCode(), temp_cr);
         
-        this.creatures.get(9).setMap(this.map);
-        this.creatures.get(9).setName("Raging Clay Golem");
-        this.creatures.get(9).setAlignment("hostile");
-        this.creatures.get(9).setTarget(this.creatures.get(8));
+        
+        temp_cr = new Villain(15,10, "golem2", 10, 10, 10);
+        temp_cr.setAttack();
+        temp_cr.setDefense();
+        temp_cr.setHealth();
+        int golem2Code = temp_cr.hashCode();
+        //this.creatures.add(temp_cr); //Array 7 Advanced Iron Golem
+        this.villains.put(temp_cr.hashCode(), temp_cr);
+        
+        temp_cr = new Villain(13,2, "person3", 10, 10, 10);
+        temp_cr.setAttack();
+        temp_cr.setDefense();
+        temp_cr.setHealth();
+        int person3Code = temp_cr.hashCode();
+        //this.creatures.add(temp_cr); //Array 8 Dirty pig farmer
+        this.villains.put(temp_cr.hashCode(), temp_cr);
+        
+        temp_cr = new Villain(10,3, "golem", 10, 10, 10);
+        temp_cr.setAttack();
+        temp_cr.setDefense();
+        temp_cr.setHealth();
+        int golemCode = temp_cr.hashCode();
+        //this.creatures.add(temp_cr); //Array 9 Raging clay golem
+        this.villains.put(temp_cr.hashCode(), temp_cr);
+        
+        this.villains.get(personCode).setMap(this.map);
+        this.villains.get(personCode).setName("Drunken pig farmer");
+        this.villains.get(personCode).setAlignment("aggressive");
+        this.villains.get(personCode).setTarget(hero);
+        
+        this.villains.get(person2Code).setMap(this.map);
+        this.villains.get(person2Code).setName("Pale Skinned Man");
+        this.villains.get(person2Code).setAlignment("hostile");
+        this.villains.get(person2Code).setTarget(this.villains.get(golem2Code));
+        
+        this.villains.get(golem2Code).setMap(this.map);
+        this.villains.get(golem2Code).setName("Advanced Iron Golem");
+        this.villains.get(golem2Code).setAlignment("neutral");
+        this.villains.get(golem2Code).setTarget(hero);
+        
+        
+        this.villains.get(person3Code).setMap(this.map);
+        this.villains.get(person3Code).setName("Dirty Pig Farmer");
+        this.villains.get(person3Code).setAlignment("neutral");
+        this.villains.get(person3Code).setTarget(this.villains.get(golemCode));
+        
+        this.villains.get(golemCode).setMap(this.map);
+        this.villains.get(golemCode).setName("Raging Clay Golem");
+        this.villains.get(golemCode).setAlignment("hostile");
+        this.villains.get(golemCode).setTarget(this.villains.get(person3Code));
         
         this.hero.setMap(map);
         Dimension dimension = new Dimension(Map.WIDTH, Map.HEIGHT); 
@@ -115,7 +151,7 @@ public class Board extends JPanel implements KeyListener {
         int vx = (int) this.area.getX();
         int vy = (int) this.area.getY();
         
-        // pitÃ¤Ã¤ olla koko mapin sisÃ¤llÃ¤ jotta edes testataan kartan siirtymistÃ¤
+        // pitää olla koko mapin sisällä, jotta edes testataan kartan siirtymistä
         boolean insidemap = (x > (buffer - 1) && x < (Map.TOTALCOLS - buffer))
                           || (y > (buffer - 1) && y < (Map.TOTALROWS - buffer));
 
@@ -134,9 +170,13 @@ public class Board extends JPanel implements KeyListener {
         
         this.hero.paint(this.area, g, this);
         
-        ListIterator<Villain> iter = this.creatures.listIterator();
+        /*ListIterator<Villain> iter = this.creatures.listIterator();
         while (iter.hasNext()) {
             iter.next().paint(this.area, g, this);
+        }*/
+        enu = this.villains.elements();
+        while(enu.hasMoreElements()){
+        	enu.nextElement().paint(this.area, g, this);
         }
         //this.golem.paint(this.area, g, this);
     }
@@ -151,11 +191,17 @@ public class Board extends JPanel implements KeyListener {
         
         this.hero.act(key);
         
-        ListIterator<Villain> iter = this.creatures.listIterator();
+        /*ListIterator<Villain> iter = this.creatures.listIterator();
         while (iter.hasNext()) {
             iter.next().act();
+        }*/
+        enu = this.villains.elements();
+        while(enu.hasMoreElements()){
+        	
+        	enu.nextElement().act();
         }
         
         repaint();
     }
+
 }
