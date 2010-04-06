@@ -91,7 +91,7 @@ abstract class Creature {
     }
 
 
-    abstract public void fight();
+    abstract public void fight(Creature creature);
 
     public Point getDestinationPoint(int key)
     {

@@ -26,7 +26,11 @@ class Villain extends Creature {
 
     public void act()
     {
-        this.fight();
+        // tappelee vain jos tällä on kohde
+        Creature target = this.getTarget();
+        if (target != null) {
+            this.fight(target);
+        }
 
         Point dest;
 
@@ -39,21 +43,17 @@ class Villain extends Creature {
         this.move(dest);
     }
 
-    public void fight() {
-        if (this.getTarget() == null) {
-            return;
-        }
+    public void fight(Creature target) {
+        if (this.isInFightRange(target) && this.getAlignment() != "peaceful") {
+            Log.write(this.getName()+" is ATTACKING " + target.getName()+".");
 
-        if (this.isInFightRange(this.getTarget()) && this.getAlignment() != "peaceful") {
-            Log.write(this.getName()+" is ATTACKING " + this.getTarget().getName()+".");
-
-            this.Strike(this.getTarget());
-            this.getTarget().Dies();
+            this.Strike(target);
+            target.Dies();
             ////If target is neutral it becomes aggressive
-            //if (this.getTarget().getAlignment()=="neutral") {
-            //    this.getTarget().setAlignment("aggressive");
-            //    //this.getTarget().setTarget(this.;
-            //    Log.write(this.getTarget().getName()+" is now aggressive!");
+            //if (target.getAlignment()=="neutral") {
+            //    target.setAlignment("aggressive");
+            //    //target.setTarget(this.;
+            //    Log.write(target.getName()+" is now aggressive!");
             //}
             ////The same applies to attacker
             //if (this.getAlignment()=="neutral") {
@@ -62,9 +62,9 @@ class Villain extends Creature {
             //}
             //
             ////Target will change to attacker
-            //if (this.getTarget().getTarget() != this) {
-            //    this.getTarget().setTarget(this);
-            //    Log.write(this.getTarget().getName() + " is now ANGRY with " + this.getName()+ ".");
+            //if (target.getTarget() != this) {
+            //    target.setTarget(this);
+            //    Log.write(target.getName() + " is now ANGRY with " + this.getName()+ ".");
             //}
             return;
         }
