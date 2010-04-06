@@ -112,6 +112,9 @@ class Map {
             for (int c = 0; c < COLS; c++) {
                 if (rowinmap && (col >= 0 && col < TOTALCOLS)) {
                     this.getCell(row, col).paint(r, c, g, p);
+                } else {
+                    Cell cell = this.getNewCell(Map.Bg.FOREST.ordinal(), r, c);
+                    cell.paint(r, c, g, p);
                 }
                 
                 // seuraava kolumni
