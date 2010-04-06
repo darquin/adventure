@@ -122,7 +122,13 @@ abstract class Creature {
     public boolean move(Point point)
     {
         if (this.canMoveTo(point)) {
+            // poistutaan ruudusta
+            Cell prev = this.map.getCell(this.pos);
+            prev.setCreature(null);
+
             this.pos = new Point(point);
+            this.map.getCell(this.pos).setCreature(this);
+
             ImageIcon ii = new ImageIcon(this.image_path);
             this.image = ii.getImage();
 
@@ -141,7 +147,12 @@ abstract class Creature {
             return false;
         }
         
-        Cell cell = this.map.getCell(y, x);
+        Cell cell = this.map.getCell(dest);
+
+        if (cell.getCreature() != null) {
+            return false;
+        }
+
         return cell.canPenetrate();
     }
     
