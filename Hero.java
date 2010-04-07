@@ -13,7 +13,6 @@ class Hero extends Creature {
     }
 
     public boolean fight(Creature opponent) {
-		System.out.println("Hero hits" + opponent.getName());
         this.Strike(opponent);
         opponent.Dies();
 		return true;
