@@ -1,3 +1,8 @@
+#Syntax:
+#Name, <imagename without extension>, start_pos_x, start_pos_y, alignment, strength, agility, endurance
+#Alignments:
+#Aggressive, Hostile, Neutral or Peaceful
+#
 Berserking Clay Golem,golem,3,10,aggressive,10,10,10
 Drunken pig farmer,person,8,3,aggressive,10,10,10
 Pale Skinned Man,person2,16,6,hostile,10,10,10

@@ -74,7 +74,9 @@ public class Board extends JPanel implements KeyListener {
 				try {
 					//int i=0;
 					String[] villainRow = (String[]) villainFile.get(i);
-					
+					if(villainRow[0].startsWith("#")){
+						continue;
+					}
 					//i++;
 					
 					int x = Integer.parseInt(villainRow[2]);
