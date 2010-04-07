@@ -12,14 +12,20 @@ class Hero extends Creature {
         this.dead = false;
     }
 
-    public void fight(Creature opponent) {
+    public boolean fight(Creature opponent) {
         this.Strike(opponent);
         opponent.Dies();
+		return true;
     }
 
     public void act(int key) {
         // kato mihin suuntaan
         Point dest = this.getDestinationPoint(key);
+        
+        //Jos painettu jotain muuta nappia, ei tehd‰ vuoron aikana mit‰‰n
+        if (dest==null) {
+        	return;
+        }
 
         // pahis kohteessa?
         Creature villain = this.map.getCell(dest).getCreature();

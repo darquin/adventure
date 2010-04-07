@@ -90,8 +90,7 @@ abstract class Creature {
         return this.image;
     }
 
-
-    abstract public void fight(Creature creature);
+    abstract public boolean fight(Creature creature);
 
     public Point getDestinationPoint(int key)
     {
@@ -113,7 +112,9 @@ abstract class Creature {
             dest.setLocation(this.getX(), this.getY() + 1);
             break;
         default:
-            break;
+        	
+        	return null;
+
         }
 
         return dest;
@@ -122,16 +123,19 @@ abstract class Creature {
     public boolean move(Point point)
     {
         if (this.canMoveTo(point)) {
-            // poistutaan ruudusta
-            Cell prev = this.map.getCell(this.pos);
-            prev.setCreature(null);
-
-            this.pos = new Point(point);
-            this.map.getCell(this.pos).setCreature(this);
+        	
+        	//Poistetaan paikkamerkint‰ cellist‰ josta astutaan pois
+        	Cell oldcell = this.map.getCell(pos);
+        	oldcell.setCreature(null);
+        	
+        	//Lis‰t‰‰n paikkamerkint‰ celliin johon astutaan
+        	Cell newcell = this.map.getCell(point);
+        	newcell.setCreature(this);
 
             ImageIcon ii = new ImageIcon(this.image_path);
             this.image = ii.getImage();
 
+			this.pos = point;
             return true;
         } else {
             return false;
@@ -149,11 +153,23 @@ abstract class Creature {
         
         Cell cell = this.map.getCell(dest);
 
-        if (cell.getCreature() != null) {
-            return false;
+        if (this.creatureInTheWay(dest)) {
+        	return false;
         }
-
+        
         return cell.canPenetrate();
+    }
+    
+    
+    
+    public boolean creatureInTheWay(Point coord) {
+    	
+    	Cell cell = this.map.getCell(coord);
+    	
+    	if (cell.getCreature()!=null) {
+    		return true;
+    	}
+    	return false;
     }
     
     public boolean canMoveTo(int x, int y) {

@@ -30,6 +30,7 @@ class Villain extends Creature {
         Creature target = this.getTarget();
         if (target != null) {
             this.fight(target);
+            return;
         }
 
         Point dest;
@@ -43,31 +44,17 @@ class Villain extends Creature {
         this.move(dest);
     }
 
-    public void fight(Creature target) {
+    public boolean fight(Creature target) {
         if (this.isInFightRange(target) && this.getAlignment() != "peaceful") {
             Log.write(this.getName()+" is ATTACKING " + target.getName()+".");
 
             this.Strike(target);
             target.Dies();
-            ////If target is neutral it becomes aggressive
-            //if (target.getAlignment()=="neutral") {
-            //    target.setAlignment("aggressive");
-            //    //target.setTarget(this.;
-            //    Log.write(target.getName()+" is now aggressive!");
-            //}
-            ////The same applies to attacker
-            //if (this.getAlignment()=="neutral") {
-            //    this.setAlignment("aggressive");
-            //    Log.write(this.getName() + " is now aggressive!");
-            //}
-            //
-            ////Target will change to attacker
-            //if (target.getTarget() != this) {
-            //    target.setTarget(this);
-            //    Log.write(target.getName() + " is now ANGRY with " + this.getName()+ ".");
-            //}
-            return;
+            
+            return true;
         }
+        
+        return false;
     }
 
     public Creature getTarget() {

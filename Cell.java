@@ -52,5 +52,7 @@ class Cell {
         return penetrate;
     }
     
+    
+    
     //public void addCreature(Creature c)
 }
