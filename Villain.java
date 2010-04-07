@@ -13,15 +13,10 @@ class Villain extends Creature {
 
     protected Creature target;
 
-    public Villain(int x, int y, String img, int strength, int endurance, int agility) {
-        super(x, y, img);
+    public Villain(Point point, String img, int strength, int endurance, int agility) {
+        super(point, img, strength, endurance, agility);
         this.alignment = "neutral";
         this.Name = "Enemy";
-        this.str = strength;
-        this.agi = agility;
-        this.end = endurance;
-        
-        this.dead = false;
     }
 
     public void act()
@@ -29,8 +24,9 @@ class Villain extends Creature {
         // tappelee vain jos tällä on kohde
         Creature target = this.getTarget();
         if (target != null) {
-            this.fight(target);
-            return;
+            if (this.fight(target)) {
+                return;
+            }
         }
 
         Point dest;

@@ -53,9 +53,9 @@ abstract class Creature {
     private int criticalChance;
     private Random chanceToHit = new Random();
     
-    protected boolean dead;
+    protected boolean dead = false;
     
-    public Creature(Point point, String img) 
+    public Creature(Point point, String img, int strength, int endurance, int agility) 
     {
         this.image_path = "images/" + img + ".png";
         this.originalImage = img;
@@ -63,13 +63,16 @@ abstract class Creature {
         ImageIcon ii = new ImageIcon(this.image_path);
         this.image = ii.getImage();
         this.pos = point;
+
+        this.str = strength;
+        this.agi = agility;
+        this.end = endurance;
+        
+		this.setAttack();
+		this.setDefense();
+		this.setHealth();
     }
     
-    public Creature(int x, int y, String img) 
-    {
-        this(new Point(x, y), img);
-    }
-
     public void setMap(Map map)
     {
         this.map = map;

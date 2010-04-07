@@ -4,7 +4,7 @@ class Hero extends Creature {
     
     public Hero(Point point, String img, int strength, int agility, int endurance) 
     {
-        super(point, img);
+        super(point, img, strength, agility, endurance);
         this.str = strength;
         this.agi = agility;
         this.end = endurance;
@@ -13,6 +13,7 @@ class Hero extends Creature {
     }
 
     public boolean fight(Creature opponent) {
+		System.out.println("Hero hits" + opponent.getName());
         this.Strike(opponent);
         opponent.Dies();
 		return true;

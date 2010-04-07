@@ -88,7 +88,8 @@ public class Board extends JPanel implements KeyListener {
 					int endurance = Integer.parseInt(villainRow[5]);
 					int agility = Integer.parseInt(villainRow[5]);
 					
-					villain = new Villain(x, y, image, strength, endurance, agility);
+                    Point pos = new Point(x, y);
+					villain = new Villain(pos, image, strength, endurance, agility);
 					villain.setName(name);
 					villain.setAlignment(alignment);
 					villain.setMap(this.map);
