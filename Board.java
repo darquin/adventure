@@ -99,6 +99,7 @@ public class Board extends JPanel implements KeyListener {
 					villain.setTarget(this.hero);
 					
 					villains.put(villain.hashCode(), villain);
+					System.out.println(villains.contains(villain));
 					
 				}
 				catch (Exception e) { //Kun creaturet loppuu filusta hyp‰t‰‰n pois
@@ -106,6 +107,7 @@ public class Board extends JPanel implements KeyListener {
 				}
 				
 			}
+			
 			
         this.hero.setMap(map);
         Dimension dimension = new Dimension(Map.WIDTH, Map.HEIGHT); 
