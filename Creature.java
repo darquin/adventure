@@ -56,8 +56,6 @@ abstract class Creature {
     private int criticalChance;
     private Random genRandom = new Random();
     
-    protected boolean dead = false;
-    
     public Creature(Point point, String img, int strength, int endurance, int agility) 
     {
         this.image_path = "images/" + img + ".png";
@@ -195,6 +193,9 @@ abstract class Creature {
     }
     
 
+    public Point getPos(){
+    	return this.pos;
+    }
     public String getName() {
         return this.Name;
     }
@@ -257,11 +258,7 @@ abstract class Creature {
     public boolean Dies(){
     	if(this.health <= 0){
     		Log.write(this.Name+" is DEAD!");
-    		this.dead = true;
-    		
-    		Board.terminateCreature(this.hashCode());
-    		this.map.getCell(pos).setCreature(null);
-    		
+    		this.map.terminateCreature(this);
     		return true;
     	}
     	else return false;

@@ -49,6 +49,7 @@ class Villain extends Creature {
             if(target.Dies())
             {
             	this.gainExp(target.lvl);
+            	this.target = null;
             }
             
             return true;
@@ -58,6 +59,11 @@ class Villain extends Creature {
     }
 
     public Creature getTarget() {
+    	if (this.target != null 
+   		&& !this.map.getVillains().containsKey(this.target.hashCode())) {
+    		this.target = null;
+    		return null;
+    	}
         return this.target;
     }
     

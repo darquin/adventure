@@ -32,7 +32,7 @@ public class Board extends JPanel implements KeyListener {
     private static final long serialVersionUID = 1L;
     private Hero hero;
 
-    private static Hashtable<Integer, Villain> villains;
+    private Hashtable<Integer, Villain> villains;
     private Enumeration<Villain> enu;
     
     private Map map;
@@ -54,6 +54,7 @@ public class Board extends JPanel implements KeyListener {
         
         //KORVAA CREATURES-arraylistin
         this.villains = new Hashtable<Integer, Villain>();
+        this.map.setVillains(this.villains);
         
         Villain villain;
         List villainFile=null;
@@ -161,11 +162,5 @@ public class Board extends JPanel implements KeyListener {
         	enu.nextElement().act();
         }
         repaint();
-    }
-  // Villain laitettava static 
-  // Kutsutaan terminate jo creaturen dies() funktiossa. -> Creaturen poisto cellistä?
-    public static void terminateCreature(int hashcode)
-    {
-    	villains.remove(hashcode);
     }
 }

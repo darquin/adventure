@@ -17,7 +17,7 @@ public class Log extends JPanel {
         Dimension dimension = new Dimension(800 - Map.WIDTH, 600 - Map.HEIGHT - 24); 
         this.setPreferredSize(dimension);
 
-        this.log = new JTextArea(13, 113);
+        this.log = new JTextArea(13, 70);
 
         JScrollPane scroll = new JScrollPane(
             this.log,
