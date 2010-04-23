@@ -155,11 +155,11 @@ class Map {
         
         row.add(colindex, cell);
     }
-    public void setVillains(Hashtable villains)
+    public void setVillains(Hashtable<Integer, Villain> villains)
     {
     	this.villains = villains;
     }
-    public Hashtable getVillains(){
+    public Hashtable<Integer, Villain> getVillains(){
     	return this.villains;
     }
     public void terminateCreature(Creature corpse)

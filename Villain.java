@@ -28,7 +28,7 @@ class Villain extends Creature {
             if (this.fight(target)) {
                 return;
             }
-        }
+    	}
 
         Point dest;
 
@@ -59,11 +59,10 @@ class Villain extends Creature {
     }
 
     public Creature getTarget() {
-    	if (this.target != null 
-   		&& !this.map.getVillains().containsKey(this.target.hashCode())) {
-    		this.target = null;
-    		return null;
-    	}
+   // 	if (this.target.Name.equals(this.hero.getName())) && !this.map.getVillains().containsKey(this.target.hashCode())) {
+   // 		System.out.println(this.target.Name);
+   // 		this.setTarget(null);
+   // 	}
         return this.target;
     }
     
@@ -174,7 +173,8 @@ class Villain extends Creature {
     }
     
     private boolean isInSight(Creature target) {
-        int radius = this.getSightRadius();
+        if(target == null) return false;
+    	int radius = this.getSightRadius();
         
         int distanceX = (int) (this.getX()-target.getX());
         int distanceY = (int) (this.getY()-target.getY());
