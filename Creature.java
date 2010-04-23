@@ -47,11 +47,14 @@ abstract class Creature {
     protected int defense;
     protected int health;
     protected int skill;
+    protected int currentExp;
+    protected int expToLvl;
+    protected int lvl;
     
     //Muuttujia tappelua varten
     private int dealtDamage;
     private int criticalChance;
-    private Random chanceToHit = new Random();
+    private Random genRandom = new Random();
     
     protected boolean dead = false;
     
@@ -71,6 +74,10 @@ abstract class Creature {
 		this.setAttack();
 		this.setDefense();
 		this.setHealth();
+		
+		this.lvl = 1;
+		this.currentExp = 0;
+		this.expToLvl = 100;
     }
     
     public void setMap(Map map)
@@ -226,10 +233,15 @@ abstract class Creature {
     }
     //End stat handling
     
+    public int getCode()
+    {
+    	return this.hashCode();
+    }
+    
     //Metodit tappelua varten:
     //Tarkistetaan mahdollinen critical hit.
     public int CriticalHitCheck(int creatureSkill){
-    	criticalChance = chanceToHit.nextInt(100);
+    	criticalChance = genRandom.nextInt(100);
     	if(criticalChance <= creatureSkill){
     		Log.write("A CRITICAL HIT!");
     		return 2;
@@ -242,10 +254,39 @@ abstract class Creature {
     	Log.write(this.Name+" strikes "+target.Name+" and deals "+dealtDamage+"points of damage!");
     	target.assignDamage(dealtDamage);
     }
-    public void Dies(){
+    public boolean Dies(){
     	if(this.health <= 0){
     		Log.write(this.Name+" is DEAD!");
     		this.dead = true;
+    		
+    		Board.terminateCreature(this.hashCode());
+    		this.map.getCell(pos).setCreature(null);
+    		
+    		return true;
     	}
+    	else return false;
+    }
+    public void gainExp(int opponentLVL)
+    {
+    	int gainedExp = 50 * (opponentLVL / this.lvl);
+    	this.currentExp += gainedExp;
+    	Log.write(this.Name + " gains " + gainedExp + " points of experience.");
+    	if(currentExp >= expToLvl) this.LevelUp();
+    }
+    public void LevelUp()
+    {
+    	int tempStat;
+    	this.lvl += 1;
+    	Log.write(this.Name + " has gained a level!!");
+    	tempStat = 1 + genRandom.nextInt(6);
+    	Log.write(this.Name + "'s strength has increased by " + tempStat);
+    	this.str += tempStat;
+    	tempStat = 1 + genRandom.nextInt(6);
+    	Log.write(this.Name + "'s agility has increased by " + tempStat);
+    	this.agi += tempStat;
+    	tempStat = 1 + genRandom.nextInt(6);
+    	Log.write(this.Name + "'s endurance has increased by " + tempStat);
+    	this.end += tempStat;
+    	this.currentExp = 0;
     }
 }
