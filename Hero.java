@@ -8,13 +8,14 @@ class Hero extends Creature {
         this.str = strength;
         this.agi = agility;
         this.end = endurance;
-        
-        this.dead = false;
     }
 
     public boolean fight(Creature opponent) {
         this.Strike(opponent);
-        opponent.Dies();
+        if(opponent.Dies())
+        {
+        	this.gainExp(opponent.lvl);
+        }
 		return true;
     }
 

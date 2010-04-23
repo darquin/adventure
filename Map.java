@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import java.awt.Image;
 import java.awt.Point;
@@ -32,6 +33,7 @@ class Map {
     private ArrayList<ArrayList> map;
     
     private List spec;
+	private Hashtable<Integer, Villain> villains;
     
     private enum Bg {
         GRASS, FOREST, MOUNTAIN
@@ -152,5 +154,17 @@ class Map {
         }
         
         row.add(colindex, cell);
+    }
+    public void setVillains(Hashtable villains)
+    {
+    	this.villains = villains;
+    }
+    public Hashtable getVillains(){
+    	return this.villains;
+    }
+    public void terminateCreature(Creature corpse)
+    {
+    	villains.remove(corpse.hashCode());
+		this.getCell(corpse.getPos()).setCreature(null);
     }
 }

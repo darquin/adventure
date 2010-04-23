@@ -49,11 +49,12 @@ public class Board extends JPanel implements KeyListener {
         this.area = new Point(0, 0);
         
         this.map = new Map();
-        this.hero = new Hero(new Point(4, 4), "creature", 20, 20, 20);
+        this.hero = new Hero(new Point(4, 4), "creature", 10, 10, 10);
         this.hero.setName("You");
         
         //KORVAA CREATURES-arraylistin
         this.villains = new Hashtable<Integer, Villain>();
+        this.map.setVillains(this.villains);
         
         Villain villain;
         List villainFile=null;
@@ -158,8 +159,9 @@ public class Board extends JPanel implements KeyListener {
         this.hero.act(key);
         
         enu = this.villains.elements();
-        while(enu.hasMoreElements()){
-            enu.nextElement().act();
+        while(enu.hasMoreElements())
+        {
+        	enu.nextElement().act();
         }
         repaint();
     }

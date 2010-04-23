@@ -17,6 +17,7 @@ class Villain extends Creature {
         super(point, img, strength, endurance, agility);
         this.alignment = "neutral";
         this.Name = "Enemy";
+        this.lvl = 2;
     }
 
     public void act()
@@ -45,7 +46,11 @@ class Villain extends Creature {
             Log.write(this.getName()+" is ATTACKING " + target.getName()+".");
 
             this.Strike(target);
-            target.Dies();
+            if(target.Dies())
+            {
+            	this.gainExp(target.lvl);
+            	this.target = null;
+            }
             
             return true;
         }
@@ -54,6 +59,11 @@ class Villain extends Creature {
     }
 
     public Creature getTarget() {
+    	if (this.target != null 
+   		&& !this.map.getVillains().containsKey(this.target.hashCode())) {
+    		this.target = null;
+    		return null;
+    	}
         return this.target;
     }
     
