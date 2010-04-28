@@ -32,17 +32,6 @@ public class Adventure extends JFrame {
         new Adventure();
     }
     
-    //public void readMap()
-    //{
-    //    // read file
-    //    
-    //    for () {
-    //        
-    //    }
-    //    
-    //    image = Toolkit.getDefaultToolkit().getImage("images/map_grass_c.gif");
-    //    g2d.drawImage(image, 50,50, this);
-    //}
     Image image;
     Graphics2D g2d;
 }

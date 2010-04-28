@@ -22,12 +22,12 @@ class Hero extends Creature {
     public void act(int key) {
         // kato mihin suuntaan
         Point dest = this.getDestinationPoint(key);
-        
-        //Jos painettu jotain muuta nappia, ei tehd‰ vuoron aikana mit‰‰n
         if (dest==null) {
         	return;
         }
-
+        if(!this.isEmpty(dest)){
+        	return;
+        }
         // pahis kohteessa?
         Creature villain = this.map.getCell(dest).getCreature();
         if (villain != null) {

@@ -152,21 +152,22 @@ abstract class Creature {
     
     public boolean canMoveTo(Point dest)
     {
-        int x = (int) dest.getX();
-        int y = (int) dest.getY();
-
-        if (x < 0 || y < 0) {
-            return false;
-        }
-        
-        Cell cell = this.map.getCell(dest);
-
-        if (this.creatureInTheWay(dest)) {
-        	return false;
-        }
-        
-        return cell.canPenetrate();
+    	if(!this.isEmpty(dest) || this.creatureInTheWay(dest)){
+    		return false;
+    	}
+        return true;
     }
+    
+    public boolean isEmpty(Point dest){
+    	int x = (int) dest.getX();
+    	int y = (int) dest.getY();
+       
+
+    	if (x < 0 || y < 0 || x >= Map.TOTALCOLS || y >= Map.TOTALROWS) {
+    		return false;
+       }
+       return this.map.getCell(dest).canPenetrate();
+   }
     
     
     
