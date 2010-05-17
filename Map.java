@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import java.awt.Image;
 import java.awt.Point;
@@ -31,7 +32,7 @@ class Map {
     private ArrayList<ArrayList> map;
     
     private List spec;
-	private Hashtable<Integer, Villain> villains;
+    private Hashtable<Integer, Villain> villains;
     
     private enum Bg {
         GRASS, FOREST, MOUNTAIN
@@ -64,8 +65,9 @@ class Map {
         }
 
         // käydään läpi jokainen ruutu ja lisätään se tietorakenteeseen
-        for (int row = 0; row < TOTALROWS; row++) {
-            String[] rowspec = (String[]) this.spec.get(row);
+        Iterator<String[]> iterator = this.spec.iterator();
+        while (iterator.hasNext()) {
+            String[] rowspec = (String[]) iterator.next();
             
             int x = Integer.parseInt(rowspec[0]);
             int y = Integer.parseInt(rowspec[1]);
@@ -163,14 +165,14 @@ class Map {
     }
     public void setVillains(Hashtable<Integer, Villain> villains)
     {
-    	this.villains = villains;
+        this.villains = villains;
     }
     public Hashtable<Integer, Villain> getVillains(){
-    	return this.villains;
+        return this.villains;
     }
     public void terminateCreature(Creature corpse)
     {
-    	villains.remove(corpse.hashCode());
-		this.getCell(corpse.getPos()).setCreature(null);
+        villains.remove(corpse.hashCode());
+        this.getCell(corpse.getPos()).setCreature(null);
     }
 }
