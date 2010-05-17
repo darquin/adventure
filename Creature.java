@@ -44,6 +44,7 @@ abstract class Creature {
     protected int attack;
     protected int defense;
     protected int health;
+    protected int maxHealth;
     protected int skill;
     protected int currentExp;
     protected int expToLvl;
@@ -216,7 +217,8 @@ abstract class Creature {
     	return this.defense;
     }
     public void setHealth(){
-    	this.health = this.end * 2;
+    	this.maxHealth = this.end * 2;
+    	this.health = this.maxHealth;
     }
     public int getHealth(){
     	return this.health;
@@ -227,9 +229,18 @@ abstract class Creature {
     public int getSkill(){
     	return this.skill;
     }
-    public void assignDamage(int damage){
+    public boolean assignDamage(int damage){
     	this.health -= damage;
-    	Log.write(this.Name +", health: "+this.health);
+    	if(this.health <= 0){
+    		Log.write(this.Name+" is DEAD!");
+    		this.map.terminateCreature(this);
+    		this.died();
+    		return true;
+    	}
+    	else {
+    		Log.write(this.Name +", health: "+this.health);
+    		return false;
+    	}
     }
     //End stat handling
     
@@ -248,20 +259,13 @@ abstract class Creature {
     	}
     	return 1;
     }
-    protected void Strike(Creature target){
+    protected boolean Strike(Creature target){
     	dealtDamage = this.attack * CriticalHitCheck(this.skill) - target.defense;
     	if(dealtDamage < 0) dealtDamage = 0;
     	Log.write(this.Name+" strikes "+target.Name+" and deals "+dealtDamage+"points of damage!");
-    	target.assignDamage(dealtDamage);
+    	return target.assignDamage(dealtDamage);
     }
-    public boolean Dies(){
-    	if(this.health <= 0){
-    		Log.write(this.Name+" is DEAD!");
-    		this.map.terminateCreature(this);
-    		return true;
-    	}
-    	else return false;
-    }
+
     public void gainExp(int opponentLVL)
     {
     	int gainedExp = 50 * (opponentLVL / this.lvl);
@@ -284,5 +288,9 @@ abstract class Creature {
     	Log.write(this.Name + "'s endurance has increased by " + tempStat);
     	this.end += tempStat;
     	this.currentExp = 0;
+		this.setAttack();
+		this.setDefense();
+		this.setHealth();
     }
+    abstract protected void died();
 }

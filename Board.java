@@ -12,6 +12,7 @@ import java.awt.Point;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -32,6 +33,8 @@ public class Board extends JPanel implements KeyListener {
     
     private Point area;
     
+    private int villainCount;
+    
     public Board() 
     {
         this.addKeyListener(this);
@@ -42,8 +45,8 @@ public class Board extends JPanel implements KeyListener {
         this.area = new Point(0, 0);
         
         this.map = new Map();
-        this.hero = new Hero(new Point(4, 4), "creature", 10, 10, 10);
-        this.hero.setName("You");
+        this.hero = new Hero(new Point(4, 4), "creature", 15, 15, 15);
+        this.hero.setName("The Hero");
         
         //KORVAA CREATURES-arraylistin
         this.villains = new Hashtable<Integer, Villain>();
@@ -94,10 +97,11 @@ public class Board extends JPanel implements KeyListener {
 					villains.put(villain.hashCode(), villain);
 					
 				}
+				
 				catch (Exception e) { //Kun creaturet loppuu filusta hyp‰t‰‰n pois
 					break;
 				}
-				
+				villainCount++;
 			}
 			
 			
@@ -152,6 +156,10 @@ public class Board extends JPanel implements KeyListener {
         
         this.hero.act(key);
         
+        if(this.villains.isEmpty()){
+        	JOptionPane.showMessageDialog(null, "You have slaughtered everything in the valley. you have become death. Congratulations!");
+        	System.exit(-1);
+        }
         enu = this.villains.elements();
         while(enu.hasMoreElements())
         {

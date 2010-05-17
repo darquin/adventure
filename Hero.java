@@ -1,5 +1,7 @@
 import java.awt.Point;
 
+import javax.swing.JOptionPane;
+
 class Hero extends Creature {
     
     public Hero(Point point, String img, int strength, int agility, int endurance) 
@@ -11,12 +13,11 @@ class Hero extends Creature {
     }
 
     public boolean fight(Creature opponent) {
-        this.Strike(opponent);
-        if(opponent.Dies())
-        {
-        	this.gainExp(opponent.lvl);
+        boolean dies = this.Strike(opponent);
+        if(dies) {
+        	gainExp(opponent.lvl);
         }
-		return true;
+        return true;
     }
 
     public void act(int key) {
@@ -37,5 +38,9 @@ class Hero extends Creature {
             // koitetaan liikkua kohteeseen
             this.move(dest);
         }
+    }
+    protected void died(){
+    	JOptionPane.showMessageDialog(null, "You and all your friends are dead. You suck... big time. GAME OVER!");
+    	System.exit(-1);
     }
 }
