@@ -1,23 +1,8 @@
-#Syntax:
-#Name, <imagename without extension>, start_pos_x, start_pos_y, alignment, strength, agility, endurance
-#Alignments:
-#Aggressive, Hostile, Neutral or Peaceful
-#
-Orko,orko,4,11,aggressive,5,10,5
-Smiley,smiley,5,11,aggressive,15,15,15
-Stolas,stolas,6,11,hostile,30,50,20
-Chronomage,chronomage,4,12,hostile,5,5,5
-Dragon,dragon,4,13,aggressive,50,50,50
-Minotaur,minotaur,4,13,hostile,40,10,40
-Siili,siili,4,16,aggressive,3,3,3
-Berserking Clay Golem,golem,3,10,aggressive,10,10,10
-Drunken pig farmer,person,8,3,aggressive,10,10,10
-Pale Skinned Man,person2,16,6,hostile,10,10,10
-Necromancer,person2,12,3,hostile,10,10,10
-Orko,orko,30,20,aggressive,5,10,5
-Smiley,smiley,18,31,aggressive,15,15,15
-Stolas,stolas,16,61,hostile,30,50,20
-Chronomage,chronomage,27,38,hostile,5,5,5
-Dragon,dragon,54,35,aggressive,50,50,50
-Minotaur,minotaur,24,41,hostile,40,10,40
-Siili,siili,19,45,aggressive,3,3,3
+Killer Bunny,chronomage,5,10,aggressive,5,1,10
+Killer Bunny,chronomage,6,10,aggressive,10,10,10
+Killer Bunny,chronomage,5,11,aggressive,10,10,10
+Otus,orko,6,15,aggressive,10,5,15
+Lokki,stolas,12,17,aggressive,10,10,10
+Lokki,smiley,17,13,aggressive,14,12,10
+Darquin,dragon,16,2,neutral,20,20,20
+
