@@ -78,8 +78,8 @@ class Map {
             }
 
             // uusi ruutu
-            Cell cell = this.getNewCell(bg, x, y);
-            this.addCell(cell, x, y);
+            Cell cell = this.getNewCell(bg, y, x);
+            this.addCell(cell, y, x);
         }
     }
     
