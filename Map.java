@@ -57,17 +57,29 @@ class Map {
     
     public void init()
     {
+        for (int row = 0; row < TOTALROWS; row++) {
+            for (int col = 0; col < TOTALCOLS; col++) {
+                // uusi ruutu
+                Cell cell = this.getNewCell(Bg.GRASS.ordinal(), row, col);
+                this.addCell(cell, row, col);
+            }
+        }
+
         // käydään läpi jokainen ruutu ja lisätään se tietorakenteeseen
         for (int row = 0; row < TOTALROWS; row++) {
             String[] rowspec = (String[]) this.spec.get(row);
             
-            for (int col = 0; col < TOTALCOLS; col++) {
-                int bg = Integer.parseInt(rowspec[col]);
-                
-                // uusi ruutu
-                Cell cell = this.getNewCell(bg, row, col);
-                this.addCell(cell, row, col);
+            int x = Integer.parseInt(rowspec[0]);
+            int y = Integer.parseInt(rowspec[1]);
+            int bg = Integer.parseInt(rowspec[2]);
+            
+            if (x > TOTALCOLS) {
+                //throw new Exception("Coordinate not in map");
             }
+
+            // uusi ruutu
+            Cell cell = this.getNewCell(bg, x, y);
+            this.addCell(cell, x, y);
         }
     }
     
@@ -104,10 +116,6 @@ class Map {
         
         for (int r = 0; r < ROWS; r++) {
             boolean rowinmap = (row >= 0 && row < TOTALROWS);
-            
-            if (rowinmap) {
-                String[] rowspec = (String[]) this.spec.get(row);
-            }
             
             int col = (int) start.getX();
             
