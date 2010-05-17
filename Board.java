@@ -2,20 +2,13 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Toolkit;
 import java.awt.event.KeyListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-
 import java.awt.Point;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -57,7 +50,7 @@ public class Board extends JPanel implements KeyListener {
         this.map.setVillains(this.villains);
         
         Villain villain;
-        List villainFile=null;
+        List<String[]> villainFile=null;
         
         	try {
 				CSVReader reader = new CSVReader(new FileReader("villains.txt"));
@@ -99,7 +92,6 @@ public class Board extends JPanel implements KeyListener {
 					villain.setTarget(this.hero);
 					
 					villains.put(villain.hashCode(), villain);
-					System.out.println(villains.contains(villain));
 					
 				}
 				catch (Exception e) { //Kun creaturet loppuu filusta hyp‰t‰‰n pois
