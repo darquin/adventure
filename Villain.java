@@ -134,7 +134,9 @@ class Villain extends Creature {
         
         int distanceX = (int) (this.getX()-target.getX());
         int distanceY = (int) (this.getY()-target.getY());
-        int distance = (int) Math.sqrt(Math.pow(distanceX,2) + Math.pow(distanceY,2));
+        double distance = (double) Math.sqrt(Math.pow(distanceX,2) + Math.pow(distanceY,2));
+        
+        
         
         if (distance <= 1) {
             return true;
