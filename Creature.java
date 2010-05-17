@@ -262,7 +262,7 @@ abstract class Creature {
     protected boolean Strike(Creature target){
     	dealtDamage = this.attack * CriticalHitCheck(this.skill) - target.defense;
     	if(dealtDamage < 0) dealtDamage = 0;
-    	Log.write(this.Name+" strikes "+target.Name+" and deals "+dealtDamage+"points of damage!");
+    	Log.write(this.Name+" strikes "+target.Name+" and deals "+dealtDamage+" points of damage!");
     	return target.assignDamage(dealtDamage);
     }
 
