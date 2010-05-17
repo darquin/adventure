@@ -2,23 +2,17 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Toolkit;
 import java.awt.event.KeyListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-
 import java.awt.Point;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -39,6 +33,8 @@ public class Board extends JPanel implements KeyListener {
     
     private Point area;
     
+    private int villainCount;
+    
     public Board() 
     {
         this.addKeyListener(this);
@@ -49,15 +45,15 @@ public class Board extends JPanel implements KeyListener {
         this.area = new Point(0, 0);
         
         this.map = new Map();
-        this.hero = new Hero(new Point(4, 4), "creature", 10, 10, 10);
-        this.hero.setName("You");
+        this.hero = new Hero(new Point(4, 4), "creature", 15, 15, 15);
+        this.hero.setName("The Hero");
         
         //KORVAA CREATURES-arraylistin
         this.villains = new Hashtable<Integer, Villain>();
         this.map.setVillains(this.villains);
         
         Villain villain;
-        List villainFile=null;
+        List<String[]> villainFile=null;
         
         	try {
 				CSVReader reader = new CSVReader(new FileReader("villains.txt"));
@@ -99,13 +95,13 @@ public class Board extends JPanel implements KeyListener {
 					villain.setTarget(this.hero);
 					
 					villains.put(villain.hashCode(), villain);
-					System.out.println(villains.contains(villain));
 					
 				}
+				
 				catch (Exception e) { //Kun creaturet loppuu filusta hyp‰t‰‰n pois
 					break;
 				}
-				
+				villainCount++;
 			}
 			
 			
@@ -160,6 +156,10 @@ public class Board extends JPanel implements KeyListener {
         
         this.hero.act(key);
         
+        if(this.villains.isEmpty()){
+        	JOptionPane.showMessageDialog(null, "You have slaughtered everything in the valley. you have become death. Congratulations!");
+        	System.exit(-1);
+        }
         enu = this.villains.elements();
         while(enu.hasMoreElements())
         {

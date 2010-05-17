@@ -8,8 +8,6 @@ import javax.swing.ImageIcon;
 import java.awt.Graphics;
 
 import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.CSVWriter;
-
 import java.util.List;
 
 import java.io.FileReader;

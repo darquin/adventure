@@ -45,16 +45,14 @@ class Villain extends Creature {
         if (this.isInFightRange(target) && this.getAlignment() != "peaceful") {
             Log.write(this.getName()+" is ATTACKING " + target.getName()+".");
 
-            this.Strike(target);
-            if(target.Dies())
+            boolean dies = this.Strike(target);
+            if(dies)
             {
             	this.gainExp(target.lvl);
             	this.target = null;
             }
-            
             return true;
         }
-        
         return false;
     }
 
@@ -202,5 +200,8 @@ class Villain extends Creature {
     
     public void setSightRadius(int radius) {
         this.sightradius = radius;
+    }
+    protected void died(){
+    	
     }
 }

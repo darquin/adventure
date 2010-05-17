@@ -1,17 +1,11 @@
 
-import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Image;
-import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 public class Adventure extends JFrame {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public Adventure() {
@@ -31,7 +25,4 @@ public class Adventure extends JFrame {
     public static void main(String[] args) {
         new Adventure();
     }
-    
-    Image image;
-    Graphics2D g2d;
 }

@@ -4,8 +4,10 @@ import java.awt.Font;
 import javax.swing.*;
 
 public class Log extends JPanel {
-    
-    static private JTextArea logger;
+	
+	private static final long serialVersionUID = 1L;
+
+	static private JTextArea logger;
 
     protected JTextArea log;
 
