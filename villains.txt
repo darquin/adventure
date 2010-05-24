@@ -4,5 +4,5 @@ Killer Bunny,chronomage,5,11,aggressive,10,10,10
 Otus,orko,6,15,aggressive,10,5,15
 Lokki,stolas,12,17,aggressive,10,10,10
 Lokki,smiley,17,13,aggressive,14,12,10
-Darquin,dragon,16,2,neutral,20,20,20
+Darquin,dragon,16,2,neutral,1,1,1
 

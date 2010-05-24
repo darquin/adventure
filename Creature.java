@@ -47,7 +47,7 @@ abstract class Creature {
     protected int maxHealth;
     protected int skill;
     protected int currentExp;
-    protected int expToLvl;
+    protected double expToLvl;
     protected int lvl;
     
     //Muuttujia tappelua varten
@@ -268,29 +268,51 @@ abstract class Creature {
 
     public void gainExp(int opponentLVL)
     {
-    	int gainedExp = 50 * (opponentLVL / this.lvl);
-    	this.currentExp += gainedExp;
-    	Log.write(this.Name + " gains " + gainedExp + " points of experience.");
-    	if(currentExp >= expToLvl) this.LevelUp();
+    	double tempOpLVL = opponentLVL;
+    	double tempLVL = this.lvl;
+    	double expMultiplier = (tempOpLVL / tempLVL);
+    	double gainedExp = 50 * expMultiplier;
+    	double roundedExp = Math.round(gainedExp);
+    	this.currentExp += roundedExp;
+    	Log.write(this.Name + " gains " + roundedExp + " points of experience.");
+    	if(this.currentExp >= this.expToLvl) this.LevelUp();
     }
     public void LevelUp()
     {
-    	int tempStat;
+    	int tempStatStr = 0;
+    	int tempStatAgi = 0;
+    	int tempStatEnd = 0;
     	this.lvl += 1;
+    	for(int i = 0; i < 15; i++)
+    	{
+    		int temp = genRandom.nextInt(3);
+    		switch(temp) 
+    		{
+    		case 0: tempStatStr++;
+    			break;
+    		case 1: tempStatAgi++;
+    			break;
+    		case 2: tempStatEnd++;
+    			break;
+    		}
+    	}
     	Log.write(this.Name + " has gained a level!!");
-    	tempStat = 1 + genRandom.nextInt(6);
-    	Log.write(this.Name + "'s strength has increased by " + tempStat);
-    	this.str += tempStat;
-    	tempStat = 1 + genRandom.nextInt(6);
-    	Log.write(this.Name + "'s agility has increased by " + tempStat);
-    	this.agi += tempStat;
-    	tempStat = 1 + genRandom.nextInt(6);
-    	Log.write(this.Name + "'s endurance has increased by " + tempStat);
-    	this.end += tempStat;
-    	this.currentExp = 0;
+    	Log.write(this.Name + "'s strength has increased by " + tempStatStr);
+    	this.str += tempStatStr;
+    	Log.write(this.Name + "'s agility has increased by " + tempStatAgi);
+    	this.agi += tempStatAgi;
+    	Log.write(this.Name + "'s endurance has increased by " + tempStatEnd);
+    	this.end += tempStatEnd;
+    	this.currentExp -= this.expToLvl;
 		this.setAttack();
 		this.setDefense();
 		this.setHealth();
+		Log.write(this.Name + " has a new maximum health of " +this.maxHealth);
+		Log.write(this.Name + " has a new attack of " +this.attack);
+		Log.write(this.Name + " has a new defense of " +this.defense);
+    	this.expToLvl = this.expToLvl * 1.5;
+    	System.out.println("New exp to lvl: " + this.expToLvl);
+    	Log.write(this.Name + " current exp: " + this.currentExp);
     }
     abstract protected void died();
 }
