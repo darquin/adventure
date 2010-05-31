@@ -55,7 +55,7 @@ abstract class Creature {
     private int criticalChance;
     private Random genRandom = new Random();
     
-    public Creature(Point point, String img, int strength, int endurance, int agility) 
+    public Creature(Point point, String img, int strength, int endurance, int agility, int level) 
     {
         this.image_path = "images/" + img + ".png";
         this.originalImage = img;
@@ -72,7 +72,7 @@ abstract class Creature {
 		this.setDefense();
 		this.setHealth();
 		
-		this.lvl = 1;
+		this.lvl = level;
 		this.currentExp = 0;
 		this.expToLvl = 100;
     }

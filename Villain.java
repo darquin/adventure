@@ -13,11 +13,11 @@ class Villain extends Creature {
 
     protected Creature target;
 
-    public Villain(Point point, String img, int strength, int endurance, int agility) {
-        super(point, img, strength, endurance, agility);
+    public Villain(Point point, String img, int strength, int endurance, int agility, int level) {
+        super(point, img, strength, endurance, agility, level);
         this.alignment = "neutral";
         this.Name = "Enemy";
-        this.lvl = 2;
+        this.lvl = level;
     }
 
     public void act()

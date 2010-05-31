@@ -45,7 +45,7 @@ public class Board extends JPanel implements KeyListener {
         this.area = new Point(0, 0);
         
         this.map = new Map();
-        this.hero = new Hero(new Point(4, 4), "creature", 15, 15, 15);
+        this.hero = new Hero(new Point(4, 4), "creature", 15, 15, 15, 1);
         this.hero.setName("The Hero");
         
         //KORVAA CREATURES-arraylistin
@@ -67,7 +67,7 @@ public class Board extends JPanel implements KeyListener {
 			
 			//Luetaan villainit tiedostosta
 			for (int i=0; i<100; i++) {
-				
+				System.out.println("i: "+i);
 				try {
 					//int i=0;
 					String[] villainRow = (String[]) villainFile.get(i);
@@ -84,11 +84,12 @@ public class Board extends JPanel implements KeyListener {
 					String alignment = villainRow[4];
 					
 					int strength = Integer.parseInt(villainRow[5]);
-					int endurance = Integer.parseInt(villainRow[5]);
-					int agility = Integer.parseInt(villainRow[5]);
+					int endurance = Integer.parseInt(villainRow[6]);
+					int agility = Integer.parseInt(villainRow[7]);
+					int level = Integer.parseInt(villainRow[8]);
 					
                     Point pos = new Point(x, y);
-					villain = new Villain(pos, image, strength, endurance, agility);
+					villain = new Villain(pos, image, strength, endurance, agility, level);
 					villain.setName(name);
 					villain.setAlignment(alignment);
 					villain.setMap(this.map);

@@ -4,12 +4,13 @@ import javax.swing.JOptionPane;
 
 class Hero extends Creature {
     
-    public Hero(Point point, String img, int strength, int agility, int endurance) 
+    public Hero(Point point, String img, int strength, int agility, int endurance, int level) 
     {
-        super(point, img, strength, agility, endurance);
+        super(point, img, strength, agility, endurance, level);
         this.str = strength;
         this.agi = agility;
         this.end = endurance;
+        this.lvl = 1;
     }
 
     public boolean fight(Creature opponent) {
