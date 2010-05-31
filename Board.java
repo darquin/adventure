@@ -165,6 +165,7 @@ public class Board extends JPanel implements KeyListener {
         while(enu.hasMoreElements())
         {
         	enu.nextElement().act();
+        	hero.UpdateStatLog();
         }
         repaint();
     }

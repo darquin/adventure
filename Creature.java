@@ -71,6 +71,7 @@ abstract class Creature {
 		this.setAttack();
 		this.setDefense();
 		this.setHealth();
+		this.setSkill();
 		
 		this.lvl = level;
 		this.currentExp = 0;
@@ -224,7 +225,7 @@ abstract class Creature {
     	return this.health;
     }
     public void setSkill(){
-    	this.skill = 50;
+    	this.skill = 10;
     }
     public int getSkill(){
     	return this.skill;
@@ -307,12 +308,31 @@ abstract class Creature {
 		this.setAttack();
 		this.setDefense();
 		this.setHealth();
+		this.setSkill();
 		Log.write(this.Name + " has a new maximum health of " +this.maxHealth);
 		Log.write(this.Name + " has a new attack of " +this.attack);
 		Log.write(this.Name + " has a new defense of " +this.defense);
     	this.expToLvl = this.expToLvl * 1.5;
     	System.out.println("New exp to lvl: " + this.expToLvl);
     	Log.write(this.Name + " current exp: " + this.currentExp);
+    }
+    public void UpdateStatLog()
+    {
+    	StatLog.clear();
+    	StatLog.write("Name: " +this.Name);
+    	StatLog.write("Level: "+ this.lvl);
+    	StatLog.write("");
+    	StatLog.write("STATS:");
+    	StatLog.write("Health: " +this.health + "/" +this.maxHealth);
+    	StatLog.write("Experience: " +this.currentExp + "/" +this.expToLvl);
+    	StatLog.write("");
+    	StatLog.write("Attack: " +this.attack);
+    	StatLog.write("Defense:" +this.defense);
+    	StatLog.write("Critical Hit Chance: " +this.skill+"%");
+    	StatLog.write("");
+    	StatLog.write("Strength: "+ this.str);
+    	StatLog.write("Agility: " +this.agi);
+    	StatLog.write("Endurance: "+this.end);	
     }
     abstract protected void died();
 }

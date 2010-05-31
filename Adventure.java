@@ -12,6 +12,7 @@ public class Adventure extends JFrame {
         Container pane = this.getContentPane();
         pane.add(new Board(), BorderLayout.LINE_START);
         pane.add(new Log(), BorderLayout.PAGE_END);
+        pane.add(new StatLog(), BorderLayout.EAST);
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 600);

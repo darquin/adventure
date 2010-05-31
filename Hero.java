@@ -14,7 +14,7 @@ class Hero extends Creature {
     }
 
     public boolean fight(Creature opponent) {
-        boolean dies = this.Strike(opponent);
+    	boolean dies = this.Strike(opponent);
         if(dies) {
         	gainExp(opponent.lvl);
         }
@@ -39,6 +39,7 @@ class Hero extends Creature {
             // koitetaan liikkua kohteeseen
             this.move(dest);
         }
+        this.UpdateStatLog();
     }
     protected void died(){
     	JOptionPane.showMessageDialog(null, "You and all your friends are dead. You suck... big time. GAME OVER!");
